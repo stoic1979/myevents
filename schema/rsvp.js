@@ -25,7 +25,7 @@ const RsvpSchema = new mongoose.Schema({
 		type: String,
 		required: true
 	},
-	req_id: {
+	reg_id: {
 		type: String,
 		required: true
 	},

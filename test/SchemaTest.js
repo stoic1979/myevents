@@ -6,6 +6,7 @@ const mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 const Event    = require('../schema/event');
 const Rsvp 	   = require('../schema/rsvp');
+const User 	   = require('../schema/user');
 
 function addEventThenRsvp(){
 	var event = new Event({
@@ -53,6 +54,25 @@ function addRsvp(event_id){
 	});
 }
 
+
+function addUser(){
+	var user = new User({
+		first_name: "tom",
+		last_name: "jerry",
+		username: "tj",
+		email: "tj@gmail.com"
+		password: "123"
+	});
+	user.save(function(err, s){
+
+		if(err) {
+			console.log("Failed to save user, got error: " + err);
+		} else {
+			console.log("Successfully saved user: \n" + s);
+		}
+	});
+}
+
 function getAllRsvp(){
 	Rsvp.find({})
 	.populate('event_id')
@@ -81,5 +101,6 @@ mongoose.connect(MONGODB_URI, function(err) {
 
     // step 2: save schema's in db
     //addEventThenRsvp();
-    getAllRsvp();
+    //getAllRsvp();
+    addUser();
 });

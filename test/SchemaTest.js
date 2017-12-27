@@ -60,7 +60,7 @@ function addUser(){
 		first_name: "tom",
 		last_name: "jerry",
 		username: "tj",
-		email: "tj@gmail.com"
+		email: "tj@gmail.com",
 		password: "123"
 	});
 	user.save(function(err, s){
@@ -102,5 +102,5 @@ mongoose.connect(MONGODB_URI, function(err) {
     // step 2: save schema's in db
     //addEventThenRsvp();
     //getAllRsvp();
-    addUser();
+    //addUser();
 });

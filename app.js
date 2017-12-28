@@ -6,7 +6,6 @@ var Rsvp         =  require('./schema/rsvp');
 var User 		 =  require('./schema/user');
 const TokenMaker = require('./helpers/tokenMaker');
 //var event        =  require('./routes/event');
-
 const app        =  express();
 
 

@@ -2,11 +2,11 @@
 //   Script for testing various models of the schema
 //------------------------------------------------------
 
-const mongoose = require('mongoose');
+const mongoose   = require('mongoose');
 mongoose.Promise = global.Promise;
-const Event    = require('../schema/event');
-const Rsvp 	   = require('../schema/rsvp');
-const User 	   = require('../schema/user');
+const Event      = require('../schema/event');
+const Rsvp 	     = require('../schema/rsvp');
+const User 	     = require('../schema/user');
 
 function addEventThenRsvp(){
 	var event = new Event({

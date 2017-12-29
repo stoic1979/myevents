@@ -6,7 +6,7 @@ const Rsvp         = require('../schema/rsvp');
 //--------------------------------------------------
 //     ADD RSVP
 //--------------------------------------------------
-router.post('/rsvp', function(req, res, next){
+router.post('/add', function(req, res, next){
 	var rsvp = new Rsvp({
 		guest_1: req.body.guest_1,
 		guest_2: req.body.guest_2,
@@ -34,7 +34,7 @@ router.post('/rsvp', function(req, res, next){
 //--------------------------------------------------
 //     GET ALL RSVP
 //--------------------------------------------------
-router.get('/rsvps', function(req, res){
+router.get('/all_rsvps', function(req, res){
 	Rsvp.find({})
 	.then( function(rsvps){
 		if(rsvps){
@@ -51,7 +51,7 @@ router.get('/rsvps', function(req, res){
 //--------------------------------------------------
 //     GET RSVP BY ID
 //--------------------------------------------------
-router.get('/rsvp/:id', function(req, res, next){
+router.get('/:id', function(req, res, next){
 	var id = req.params.id;
 
 	Rsvp.find({"_id": id})
@@ -69,7 +69,7 @@ router.get('/rsvp/:id', function(req, res, next){
 //--------------------------------------------------
 //     GET RSVP BY EVENT ID
 //--------------------------------------------------
-router.get('/rsvp/event_id/:id', function(req, res, next){
+router.get('/event_id/:id', function(req, res, next){
 	var id = req.params.id;
 
 	Rsvp.find({"event_id": id})
@@ -87,7 +87,7 @@ router.get('/rsvp/event_id/:id', function(req, res, next){
 //--------------------------------------------------
 //     GET RSVP BY REG ID
 //--------------------------------------------------
-router.get('/rsvp/reg_id/:id', function(req, res, next){
+router.get('/reg_id/:id', function(req, res, next){
 	var id = req.params.id;
 
 	Rsvp.find({"reg_id": id})
@@ -105,7 +105,7 @@ router.get('/rsvp/reg_id/:id', function(req, res, next){
 //--------------------------------------------------
 //     CANCEL RSVP
 //--------------------------------------------------
-router.get('/rsvp/cancel/:id', function(req, res, next){
+router.get('/cancel/:id', function(req, res, next){
 	var id = req.params.id;
 	Rsvp.remove({"_id": id})
 	.then(function(err, event){

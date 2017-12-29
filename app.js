@@ -1,15 +1,18 @@
-const express    =  require('express');
-var bodyParser   =  require('body-parser');
-var mongoose     =  require('mongoose');
-var Event        =  require('./schema/event');
-var Rsvp         =  require('./schema/rsvp');
-var User 		 =  require('./schema/user');
-const TokenMaker = require('./helpers/tokenMaker');
-var event        =  require('./routes/event');
-var rsvp         =  require('./routes/rsvp');
-var user         =  require('./routes/user');
-const app        =  express();
+const express      =  require('express');
+const bodyParser   =  require('body-parser');
+const mongoose     =  require('mongoose');
+const Event        =  require('./schema/event');
+const Rsvp         =  require('./schema/rsvp');
+const User 		   =  require('./schema/user');
+const event        =  require('./routes/event');
+const rsvp         =  require('./routes/rsvp');
+const user         =  require('./routes/user');
 
+const TokenMaker   =  require('./helpers/tokenMaker');
+const jsonwebtoken =  require('jsonwebtoken');
+
+const app          =  express();
+const SECRET_KEY   =  "MyEventAPI"
 
 app.use( bodyParser.json() );       // to support JSON-encoded bodies
 app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
@@ -30,12 +33,52 @@ app.get('/api/demo', function(req, res){
 });
 
 
+//---------------------------------------------------
+// url ignore list for token validation middleware
+//---------------------------------------------------
+var ignore_list = [
+    '/api/user', 
+    '/api/user/login'   
+];
+
+
+//---------------------------------------------------
+//  Token Validation Middleware
+//---------------------------------------------------
+app.use(function(req, res, next){
+	if(ignore_list.indexOf(req.originalUrl) > -1){
+		console.log("ignore: ");
+		return next();
+	}
+
+	var token = req.body.token || req.params.token || req.headers['x-access-token'];
+
+	if (token) {
+
+		jsonwebtoken.verify(token, SECRET_KEY, function(err, decoded){
+			if (err) {
+				console.log("Got exception: " +err);
+			}
+			else{
+				req.decoded = decoded;
+				console.log("decoded: " + JSON.stringify(req.decoded));	
+				next();
+			}
+
+		});
+	}else{
+		res.send({success: false, message: "No token provided!"});
+	}
+
+});//use
+
+
 //--------------------------------------------------
 // adding routers
 //--------------------------------------------------
-app.use('/api/', event);
-app.use('/api/', rsvp);
-app.use('/api/user', user);
+app.use('/api/event/', event);
+app.use('/api/rsvp/', rsvp);
+app.use('/api/user/', user);
 
 
 //--------------------------------------------------
@@ -55,9 +98,15 @@ mongoose.connect(MONGODB_URI, function(err) {
 //--------------------------------------------------
 //    STARTING SERVER
 //--------------------------------------------------
-var server = app.listen(8081, function () {
-	var host = server.address().address
-   	var port = server.address().port
+var server = app.listen(8081, function (err) {
 
-   	console.log("Example app listening at http://%s:%s", host, port);
+	if(err){
+		console.log(err);
+	}
+	else{
+		var host = server.address().address
+   		var port = server.address().port
+
+   		console.log("Example app listening at http://%s:%s", host, port);
+   	}
 })

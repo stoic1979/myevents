@@ -6,7 +6,7 @@ const Event        = require('../schema/event');
 //--------------------------------------------------
 //     ADD EVENTS
 //--------------------------------------------------
-router.post('/event', function(req, res, next){
+router.post('/add', function(req, res, next){
 	var event = new Event({
 		event_type: req.body.event_type,
 		store_number: req.body.store_number,
@@ -35,7 +35,7 @@ router.post('/event', function(req, res, next){
 //--------------------------------------------------
 //     GET ALL EVENTS
 //--------------------------------------------------
-router.get('/events', function(req, res){
+router.get('/all_events', function(req, res){
 	Event.find({})
 	.then( function(events){
 		if(events){
@@ -52,7 +52,7 @@ router.get('/events', function(req, res){
 //--------------------------------------------------
 //     GET EVENT BY ID
 //--------------------------------------------------
-router.get('/event/:id', function(req, res, next){
+router.get('/:id', function(req, res, next){
 	var id = req.params.id;
 
 	Event.find({"_id": id})
@@ -72,18 +72,18 @@ router.get('/event/:id', function(req, res, next){
 //--------------------------------------------------
 //     GET EVENT BY Status
 //--------------------------------------------------
-router.get('/event/status/:status', function(req, res, next){
+router.get('/status/:status', function(req, res, next){
 	var status = req.params.status;
 	
 	Event.find({"status": status})
-	.then( function(err, event){
+	.then( function(event){
 		if(event){
 			console.log("get Event: " + event);
 			res.json({success: true, event: event});
 		}
 		else{
 			console.log("get Event Got error: " + err);
-			res.json({success: false, message: "status Not match"});
+			res.json({success: false, message: "status not match"});
 		}
 	});
 });
@@ -92,7 +92,7 @@ router.get('/event/status/:status', function(req, res, next){
 //--------------------------------------------------
 //     Edit EVENT
 //--------------------------------------------------
-router.post('/event/edit', function(req, res, next){
+router.post('/edit', function(req, res, next){
 	var id = req.body.id;
 	var event_type = req.body.event_type;
 	var store_number = req.body.store_number;
@@ -130,7 +130,7 @@ router.post('/event/edit', function(req, res, next){
 //--------------------------------------------------
 //     Edit EVENT Status
 //--------------------------------------------------
-router.post('/event/update_status', function(req, res, next){
+router.post('/update_status', function(req, res, next){
 	var id = req.body.id;
 	var status = req.body.status;
 
@@ -150,12 +150,12 @@ router.post('/event/update_status', function(req, res, next){
 //--------------------------------------------------
 //     CANCEL EVENT
 //--------------------------------------------------
-router.get('/event/cancel/:id', function(req, res, next){
+router.get('/cancel/:id', function(req, res, next){
 	var id = req.params.id;
 
 	Event.remove({"_id": id})
-	.then(function(err, event){
-		if(event){
+	.exec(function(err, event){
+		if(err){
 			res.json({success: true, message: "Event Cancel !", event: event});
 		}
 		else{

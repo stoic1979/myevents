@@ -1,6 +1,6 @@
 const express      = require('express');
 const router       = express.Router();
-const Event    = require('../schema/event');
+const Event        = require('../schema/event');
 
 
 //--------------------------------------------------

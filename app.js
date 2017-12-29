@@ -29,6 +29,10 @@ app.get('/api/demo', function(req, res){
 	    res.sendFile(__dirname + "/templates/" + "index.html");
 });
 
+
+//--------------------------------------------------
+// adding routers
+//--------------------------------------------------
 app.use('/api/', event);
 app.use('/api/', rsvp);
 app.use('/api/user', user);

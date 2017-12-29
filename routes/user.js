@@ -24,7 +24,8 @@ router.post('/', function(req, res, next){
 		if(err){
 			console.log("user save error: " + err);
 			res.json({success: false, error: ""+ err});
-		} else {
+		} 
+		else {
 			res.json({ success: true, message: 'user created !', User: user});
 			console.log("suceessss")
         }

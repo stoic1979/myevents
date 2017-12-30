@@ -108,9 +108,9 @@ router.get('/reg_id/:id', function(req, res, next){
 router.get('/cancel/:id', function(req, res, next){
 	var id = req.params.id;
 	Rsvp.remove({"_id": id})
-	.then(function(err, event){
+	.then(function(event){
 		if(event){
-			res.json({success: true, message: "Rsvp cancel !", event: event});
+			res.json({success: true, message: "Rsvp cancel !"});
 		}
 		else{
 		res.json({success: false, message: "Rsvp Not Found cancel !"});	

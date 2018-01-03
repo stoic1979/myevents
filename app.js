@@ -34,7 +34,10 @@ app.get('/api/demo', function(req, res){
 //---------------------------------------------------
 var ignore_list = [
     '/api/user', 
-    '/api/user/login'   
+    '/api/user/login',
+    '/api/rsvp/add',
+    '/api/rsvp/cancel/:id',
+    '/api/event/all_events'  
 ];
 
 

@@ -1,6 +1,6 @@
 var express       =  require('express');
 var router        =  express.Router();
-var User 	      =  require('../schema/user');
+var User          =  require('../schema/user');
 const TokenMaker  =  require('../helpers/tokenMaker');
 
 var secretKey     =  "MyEventAPI"

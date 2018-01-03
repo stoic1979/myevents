@@ -3,7 +3,7 @@ const bodyParser   =  require('body-parser');
 const mongoose     =  require('mongoose');
 const Event        =  require('./schema/event');
 const Rsvp         =  require('./schema/rsvp');
-const User 		   =  require('./schema/user');
+const User         =  require('./schema/user');
 const event        =  require('./routes/event');
 const rsvp         =  require('./routes/rsvp');
 const user         =  require('./routes/user');
@@ -22,10 +22,6 @@ app.use(bodyParser.urlencoded({     // to support URL-encoded bodies
 
 app.use(express.json());       // to support JSON-encoded bodies
 app.use(express.urlencoded()); // to support URL-encoded bodies
-
-
-// var secretKey = "MyEvent"
-// var tokenMaker = new TokenMaker(secretKey);
 
 
 app.get('/api/demo', function(req, res){
